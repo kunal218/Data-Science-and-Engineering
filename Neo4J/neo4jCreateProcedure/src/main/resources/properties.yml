@@ -1,0 +1,12 @@
+URI: 'bolt://localhost:7687'
+
+username: 'neo4j'
+
+password: 'neo4jnew'
+
+outputFilePath: 'C:\Users\Kunal218\Pictures\tinkerpopfull\neo4jCreateProcedure\src\main\resources\'
+
+queriesFilePath: 'C:\\Users\\Kunal218\\Pictures\\tinkerpopfull\\neo4jCreateProcedure\\src\\main\\resources\\queries.yml'
+
+resultsetFilePath: 'C:\\Users\\Kunal218\\Pictures\\tinkerpopfull\\neo4jCreateProcedure\\src\\main\\resources\\resultset.yml'
+

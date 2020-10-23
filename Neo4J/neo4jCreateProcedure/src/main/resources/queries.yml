@@ -1,0 +1,45 @@
+selectAll: g.V().hasLabel(\"Category\").valueMap()
+
+selectSingleColumn: g.V().hasLabel(\"Category\").values(\"categoryName\")
+
+selectMultipleColumns: g.V().hasLabel(\"Category\").valueMap(\"categoryName\", \"description\")
+
+selectCalculatedColumn: g.V().hasLabel(\"Category\").values(\"categoryName\").map {it.get().length()}
+
+selectDistinctValues: g.V().hasLabel(\"Category\").values(\"categoryName\").map {it.get().length()}.dedup()
+
+selectScalarValue: g.V().hasLabel(\"Category\").values(\"categoryName\").map {it.get().length()}.max()
+
+filterByEquality: g.V().has(\"Product\", \"unitsInStock\", 0).valueMap(\"categoryName\", \"unitsInStock\")
+
+filterByInequality: g.V().has(\"Product\", \"unitsOnOrder\", neq(0)).valueMap(\"productName\", \"unitsOnOrder\")
+
+filterByValueRange: g.V().has(\"Product\", \"unitPrice\", between(5f, 10f)).valueMap(\"productName\", \"unitPrice\")
+
+multipleFilterConditions: g.V().has(\"Product\", \"discontinued\", 1).has(\"unitsInStock\", neq(0)).valueMap(\"productName\", \"unitsInStock\")
+
+orderByValueAscending: g.V().hasLabel(\"Product\").order().by(\"unitPrice\", incr).valueMap(\"productName\", \"unitPrice\")
+
+orderByValueDescending: g.V().hasLabel(\"Product\").order().by(\"unitPrice\", decr).valueMap(\"productName\", \"unitPrice\")
+
+limitNumberOfResults: g.V().hasLabel(\"Product\").order().by(\"unitPrice\", incr).limit(5).valueMap(\"productName\", \"unitPrice\")
+
+pagedResultSet: g.V().hasLabel(\"Product\").order().by(\"unitPrice\", incr).range(5, 10).valueMap(\"productName\", \"unitPrice\")
+
+groupbyValue: g.V().hasLabel(\"Product\").groupCount().by(\"unitPrice\").order(local).by(values, decr).select(keys).limit(local, 1)
+
+innerJoin: g.V().has(\"categoryName\",\"Beverages\").in(\"PART_OF\").values(\"productName\")
+
+leftJoin: g.V().hasLabel(\"Customer\").match(__.as(\"c\").values(\"customerID\").as(\"customerID\"),__.as(\"c\").out(\"PURCHASED\").count().as(\"orders\")).select(\"customerID\", \"orders\")
+
+unionOfQueries: g.V().hasLabel(\"Customer\").union(
+  filter {it.get().value(\"companyName\")[0] == \"A\"},
+  filter {it.get().value(\"companyName\")[0] == \"E\"}).values(\"companyName\")
+
+create: c = graph.addVertex(label, \"Category\",\"categoryName\", \"Merchandising\",\"description\", \"Cool Products to promote Gremlin\");p = graph.addVertex(label, \"Product\",\"productName\", \"Red Gremlin Jacket\");p.addEdge(\"PART_OF\", c);g.V().has(\"Product\", \"productName\", \"Red Gremlin Jacket\")
+
+update: g.V().has(\"Product\", \"productName\", \"Red Gremlin Jacket\").property(\"productName\", \"Green Gremlin Jacket\").iterate();g.V().has(\"Product\", \"productName\", \"Green Gremlin Jacket\")
+
+delete1: g.V().has(\"Product\", \"productName\", \"Green Gremlin Jacket\").drop().iterate();g.V().has(\"Product\", \"productName\", \"Green Gremlin Jacket\")
+
+delete2: g.V().has(\"Category\", \"categoryName\", \"Merchandising\").drop().iterate();g.V().has(\"Category\", \"categoryName\", \"Merchandising\")

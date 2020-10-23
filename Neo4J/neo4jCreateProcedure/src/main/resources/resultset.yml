@@ -1,0 +1,39 @@
+g.V().hasLabel(\"Category\").valueMap(): 'Record<{value: {description: ["Soft drinks, coffees, teas, beers, and ales"], categoryName: ["Beverages"], categoryID: ["1"]}}>'
+
+g.V().hasLabel(\"Category\").values(\"categoryName\"): 'Record<{value: "Beverages"}>'
+
+g.V().hasLabel(\"Category\").valueMap(\"categoryName\", \"description\"): 'Record<{value: {description: ["Soft drinks, coffees, teas, beers, and ales"], categoryName: ["Beverages"]}}>'
+
+g.V().hasLabel(\"Category\").values(\"categoryName\").map {it.get().length()}: 'Record<{value: 9}>'
+
+g.V().hasLabel(\"Category\").values(\"categoryName\").map {it.get().length()}.dedup(): 'Record<{value: 9}>'
+
+g.V().hasLabel(\"Category\").values(\"categoryName\").map {it.get().length()}.max(): 'Record<{value: 14}>'
+
+g.V().has(\"Product\", \"unitsInStock\", 0).valueMap(\"categoryName\", \"unitsInStock\"): 'Record<{value: {unitsInStock: [0]}}>'
+
+g.V().has(\"Product\", \"unitsOnOrder\", neq(0)).valueMap(\"productName\", \"unitsOnOrder\"): 'Record<{value: {unitsOnOrder: [40], productName: ["Chang"]}}>'
+
+g.V().has(\"Product\", \"unitPrice\", between(5f, 10f)).valueMap(\"productName\", \"unitPrice\"): 'Record<{value: {unitPrice: [6.0], productName: ["Konbu"]}}>'
+
+g.V().has(\"Product\", \"discontinued\", 1).has(\"unitsInStock\", neq(0)).valueMap(\"productName\", \"unitsInStock\"): 'Record<{value: {unitsInStock: [29], productName: ["Mishi Kobe Niku"]}}>'
+
+g.V().hasLabel(\"Product\").order().by(\"unitPrice\", incr).valueMap(\"productName\", \"unitPrice\"): 'Record<{value: {unitPrice: [2.5], productName: ["Geitost"]}}>'
+
+g.V().hasLabel(\"Product\").order().by(\"unitPrice\", decr).valueMap(\"productName\", \"unitPrice\"): 'Record<{value: {unitPrice: [263.5], productName: ["Côte de Blaye"]}}>'
+
+g.V().hasLabel(\"Product\").order().by(\"unitPrice\", incr).limit(5).valueMap(\"productName\", \"unitPrice\"): 'Record<{value: {unitPrice: [2.5], productName: ["Geitost"]}}>'
+
+g.V().hasLabel(\"Product\").order().by(\"unitPrice\", incr).range(5, 10).valueMap(\"productName\", \"unitPrice\"): 'Record<{value: {unitPrice: [7.75], productName: ["Rhönbräu Klosterbier"]}}>'
+
+g.V().hasLabel(\"Product\").groupCount().by(\"unitPrice\").order(local).by(values, decr).select(keys).limit(local, 1): 'Record<{value: 14.0}>'
+
+g.V().has(\"categoryName\",\"Beverages\").in(\"PART_OF\").values(\"productName\"): 'Record<{value: "Chai"}>'
+
+g.V().hasLabel(\"Customer\").match(__.as(\"c\").values(\"customerID\").as(\"customerID\"),__.as(\"c\").out(\"PURCHASED\").count().as(\"orders\")).select(\"customerID\", \"orders\"): 'Record<{value: {customerID: "ALFKI", orders: 6}}>'
+
+g.V().hasLabel(\"Customer\").union( filter {it.get().value(\"companyName\")[0] == \"A\"}, filter {it.get().value(\"companyName\")[0] == \"E\"}).values(\"companyName\"): 'Record<{value: "Alfreds Futterkiste"}>'
+
+c = graph.addVertex(label, \"Category\",\"categoryName\", \"Merchandising\",\"description\", \"Cool Products to promote Gremlin\");p = graph.addVertex(label, \"Product\",\"productName\", \"Red Gremlin Jacket\");p.addEdge(\"PART_OF\", c);g.V().has(\"Product\", \"productName\", \"Red Gremlin Jacket\"): 'Record<{value: node<1044>}>'
+
+g.V().has(\"Product\", \"productName\", \"Red Gremlin Jacket\").property(\"productName\", \"Green Gremlin Jacket\").iterate();g.V().has(\"Product\", \"productName\", \"Green Gremlin Jacket\"): 'Record<{value: node<1044>}>'
