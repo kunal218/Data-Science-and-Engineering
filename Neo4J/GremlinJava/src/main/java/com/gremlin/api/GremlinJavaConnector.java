@@ -19,7 +19,7 @@ public class GremlinJavaConnector {
             e.printStackTrace();
         }
         Client client = cluster.connect();
-        ResultSet result = client.submit("1");
+        ResultSet result = client.submit(query);
         CompletableFuture<List<Result>> output = result.all();
 
         try {
