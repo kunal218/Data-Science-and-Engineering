@@ -33,6 +33,8 @@ public class Neo4jProcedures {
     public static String queriesFilePath = "";
     public static String resultsetFilePath = "";
     public static  String version = "";
+	public static  String inputFilePath = "";
+
 
     @Procedure(name = "com.Neo4jProcedures.run", mode = Mode.WRITE)
     @Description("CALL com.Neo4jProcedures.run(String said)")
@@ -52,7 +54,7 @@ public class Neo4jProcedures {
 
         try(Session s = driver.session() ){
             ExtractDataFromExcel extractDataFromExcel = new ExtractDataFromExcel();
-            Map data = extractDataFromExcel.getData("C:\\\\Users\\\\Kunal218\\\\Pictures\\\\tinkerpopfull\\\\neo4jCreateProcedure\\\\src\\\\main\\\\resources\\\\cypher_queris_northwind.xlsx");
+            Map data = extractDataFromExcel.getData(inputFilePath);
             String cypher = data.get(queryName).toString();
             StatementResult cypherOutput = s.writeTransaction(new TransactionWork<StatementResult>() {
                 @Override
@@ -216,7 +218,7 @@ public class Neo4jProcedures {
         neo4jProcedures.outputFilePath = propertiesMap.get("outputFilePath").toString();
         neo4jProcedures.queriesFilePath = propertiesMap.get("queriesFilePath").toString();
         neo4jProcedures.resultsetFilePath = propertiesMap.get("resultsetFilePath").toString();
-
+        neo4jProcedures.inputFilePath = propertiesMap.get("inputFilePath").toString();
         neo4jProcedures.parseYaml();
 
 

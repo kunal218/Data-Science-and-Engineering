@@ -10,3 +10,5 @@ queriesFilePath: 'C:\\Users\\Kunal218\\Pictures\\tinkerpopfull\\neo4jCreateProce
 
 resultsetFilePath: 'C:\\Users\\Kunal218\\Pictures\\tinkerpopfull\\neo4jCreateProcedure\\src\\main\\resources\\resultset.yml'
 
+inputFilePath: 'C:\\Users\\Kunal218\\Pictures\\tinkerpopfull\\neo4jCreateProcedure\\src\\main\\resources\\cypher_queris_northwind.xlsx'
+
