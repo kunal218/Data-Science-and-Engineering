@@ -93,10 +93,10 @@ public class StreamProcessing {
 			StreamExecutionEnvironment environment = StreamExecutionEnvironment.getExecutionEnvironment();
 			Properties properties = new Properties();
 			
-			properties.setProperty(TwitterSource.CONSUMER_KEY, "OhbUbxisFS4J6quuKfQrQ1tyN");
-			properties.setProperty(TwitterSource.CONSUMER_SECRET, "LpcsvemnOamvUr1JgaQFxpfGAmSawcwCDEgfJ9ms6TzjEG8BcD");
-			properties.setProperty(TwitterSource.TOKEN, "1100640992695279618-SHAXnPQZnmWucrCe3bDZCxuk1nAXZ5");
-			properties.setProperty(TwitterSource.TOKEN_SECRET, "Xt0K4m8077v2ZDhTt5qt0RH9aYI1Ulunfm8UHcqKJxUoa");
+			properties.setProperty(TwitterSource.CONSUMER_KEY, args[0]);
+			properties.setProperty(TwitterSource.CONSUMER_SECRET, args[1]);
+			properties.setProperty(TwitterSource.TOKEN, args[2]);
+			properties.setProperty(TwitterSource.TOKEN_SECRET, args[3]);
 			
 			environment.addSource(new TwitterSource(properties))
 		.flatMap(new FlatMapper())
