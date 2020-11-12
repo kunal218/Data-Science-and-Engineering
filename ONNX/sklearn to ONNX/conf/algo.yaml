@@ -1,0 +1,10 @@
+algo_list:
+  - DecisionTreeClassifier_dtc
+  - DecisionTreeRegressor_dtr
+  - LinearRegression_lg
+  - LogisticRegression_lrc
+  - RandomForestClassifier_rfc
+  - RandomForestRegressor_rfr
+  - XGBClassifier_xgbc
+  - XGBRegressor_xgbr
+  - XGB_xgb

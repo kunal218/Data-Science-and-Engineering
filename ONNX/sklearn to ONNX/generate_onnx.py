@@ -15,7 +15,7 @@ import yaml
 from onnxmltools import convert_xgboost
 from xgboost import XGBClassifier, train, XGBRegressor
 import pandas as pd
-from src.utils import create_onnx, get_config, generateFiles
+from utils import create_onnx, get_config, generateFiles
 import xgboost as xgb
 
 
